@@ -2,7 +2,10 @@ package controllers
 
 import javax.inject._
 import play.api._
+import play.api.libs.json._
 import play.api.mvc._
+
+import models.Product
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -18,12 +21,18 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
+
+  //Implicits for deserialization
+  implicit val todoFormat = Json.format[Product]
+
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
 
   def productListing() = Action { implicit request: Request[AnyContent] =>
-    Ok("To be implemented")
+    val products = models.ProductService.findAll()
+    //Ok(views.html.productList(products))
+    Ok(Json.toJson(products))
   }
 
   def productSpecificListing(count: Int) = Action { implicit request: Request[AnyContent] =>
