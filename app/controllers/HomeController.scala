@@ -21,4 +21,14 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   def index() = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
+
+  def productListing() = Action { implicit request: Request[AnyContent] =>
+    Ok("To be implemented")
+  }
+
+  def productSpecificListing(count: Int) = Action { implicit request: Request[AnyContent] =>
+    Ok(s"To be implemented $count")
+  }
+
 }
+
